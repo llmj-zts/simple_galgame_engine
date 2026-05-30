@@ -1,0 +1,2 @@
+# simple_galgame_engine
+pygame编的galgame引擎
