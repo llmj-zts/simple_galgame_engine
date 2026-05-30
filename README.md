@@ -37,4 +37,4 @@ python main.py
 
 
 [更新日志](CHANGELOG.md)  
-[个人网站页面]()
+[个人网站页面](https://wfy-coder.github.io/2/index.html)
