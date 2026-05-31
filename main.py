@@ -9,6 +9,7 @@ def main():
     pygame.init()
     pygame.display.set_caption(Display.TITLE)
     screen = pygame.display.set_mode((Display.WIDTH, Display.HEIGHT), pygame.DOUBLEBUF)
+    Game(screen).run()
 
     try:
         Game(screen).run()
