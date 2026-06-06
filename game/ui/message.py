@@ -1,23 +1,24 @@
 import pygame
 from typing import Optional
+from game.config import Display
 
 
-class MessageBox:
+class Message:
     def __init__(self, screen):
-        self.msg: str = "请输入文本"
+        self.msg: str | None = "请输入文本"
         self.x: int = 0
         self.y: int = 0
-        self.s: int = 50
+        self.size: int = 50
         self.color: tuple = (255, 255, 255)
         self.alpha: int = 255
         self.center: bool = False
         self.surface: Optional[pygame.Surface] = None
         self.screen: Optional[pygame.Surface] = screen
         self.atas: bool = True
-        self.font: str = "wenquanyizenhei"
+        self.font: str = Display.FONT
 
     def show(self):
-        message = pygame.font.SysFont(self.font, self.s).render(
+        message = pygame.font.SysFont(self.font, self.size).render(
             self.msg, self.atas, self.color
         )
 

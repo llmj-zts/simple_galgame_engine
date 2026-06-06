@@ -1,37 +1,40 @@
-import glob
-import pygame
-import os.path
-from game.extra import Extra
-from game.config import Path
-from game.saved import Saved
-from .base_scene import BaseScene
+import time
+from game.interpreter import ImageLoad
+from game.interpreter.solver import Solver
+from game.saves import saved
+from game.config import GameStatus
+from game.scenes.base_scene import BaseScene
+from game.scenes.manage_scene import SceneManager
+from game.scenes.sequences.transition_scene import TransitionScene
 
 
 class GameScenes(BaseScene):
     def __init__(self, screen):
-        self.text = Extra().read_script()
         self.screen = screen
-        self.game_process = [0, 0]
-        self.show_length = 0
-        self.show_text = None
+        self.solve = Solver()
 
-        self.image = {}
-        for i in glob.glob(os.path.join(Path.PATH_IMAGE, "figure", "*.png")):
-            self.image[os.path.basename(i).split(".")[0]] = pygame.image.load(
-                i
-            ).convert_alpha()
+        self.manage_scene = SceneManager(self.screen)
+
+        self.manage_scene.register("transition", TransitionScene(screen))
+        self.manage_scene.register("dialog", TransitionScene(screen))
+        self.manage_scene.register("choice", TransitionScene(screen))
 
     def enter(self):
-        self.game_process = Saved().load()
+        game_process = saved.load()
+        GameStatus.GAMESTATES = game_process
+        GameStatus.FIGURE_IMAGE = ImageLoad.load_all_figure()
+
+        self.next()
 
     def next(self):
-        self.show_length = 0
-        self.game_process[1] += 1
-        if self.text[self.game_process[0]][self.game_process[1]][0] == "@P":
-            self.game_process = [
-                self.text[self.game_process[0]][self.game_process[1]][1],
-                0,
-            ]
-        self.show_text = self.text[self.game_process[0]][self.game_process[1]]
-        if not self.show_text[0] in ("@E", "@L", "@S", "@B", "@T", "@P"):
-            self.show_text[2] = Extra().adapt_text_width(self.show_text[2], 56)
+        next_scene = self.solve.next()
+        if next_scene != "none":
+            saved.save(GameStatus.GAMESTATES)
+            self.manage_scene.switch(next_scene)
+
+    def update(self):
+        GameStatus.GAMESTATES.time = time.time()
+        self.manage_scene.update()
+
+    def draw(self):
+        self.manage_scene.draw()

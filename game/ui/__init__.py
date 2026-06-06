@@ -1,3 +1,3 @@
-from .messagebox import MessageBox
+from .message import Message
 
-__all__ = ["MessageBox"]
+__all__ = ["Message"]

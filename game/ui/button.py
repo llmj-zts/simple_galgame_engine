@@ -1,7 +1,7 @@
 import pygame
 
-from ..interpreter.image_load import ImageLoad
-from game.ui.messagebox import MessageBox
+from game.interpreter import ImageLoad
+from game.ui.message import Message
 
 
 class Button:
@@ -10,7 +10,7 @@ class Button:
         self.msg = "请输入文本"
         self.pos = []
         self.text_size = 40
-        self.image_btn = ImageLoad(None).UiLoad("button")
+        self.image_btn = ImageLoad.load_ui("button.png")
 
     def blit(self):
         if self.check_collision(
@@ -20,12 +20,12 @@ class Button:
         else:
             self.image_btn.set_alpha(180)
         self.screen.blit(self.image_btn, self.pos)
-        msg = MessageBox(self.screen)
+        msg = Message(self.screen)
         msg.msg = self.msg
         msg.x = self.pos[0] + self.image_btn.get_size()[0] / 2
         msg.y = self.pos[1] + self.image_btn.get_size()[1] / 2
         msg.center = True
-        msg.s = self.text_size
+        msg.size = self.text_size
 
         msg.show()
 

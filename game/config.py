@@ -1,5 +1,7 @@
 import os
 
+from game.saves.game_data import GameStats
+
 
 class Display:
     FPS = 60
@@ -20,3 +22,18 @@ class Path:
     PATH_IMAGE_BACKGROUND = os.path.join(HEAD, PATH_IMAGE, "background")
     PATH_IMAGE_TRANSITION = os.path.join(HEAD, PATH_IMAGE, "transition")
     PATH_SOUNDS = os.path.join(HEAD, "assets", "sounds")
+
+
+class GameStatus:
+    GAMESTATES = GameStats()
+    GAMESTATES.version = 0.1
+    FIGURE_IMAGE = {}
+    FIGURE_STR = {
+        0: "常态",
+        1: "微笑",
+        2: "叹气",
+        3: "伤心",
+        4: "惊讶",
+        5: "愤怒",
+        6: "闭眼",
+    }

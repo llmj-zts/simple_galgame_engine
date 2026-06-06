@@ -1,5 +1,5 @@
-from .base_scene import BaseScene
-from ..ui.messagebox import MessageBox
+from game.scenes.base_scene import BaseScene
+from game.ui.message import Message
 
 
 class AuthorScene(BaseScene):
@@ -7,7 +7,7 @@ class AuthorScene(BaseScene):
         pass
 
     def draw(self):
-        msg = MessageBox(self.screen)
+        msg = Message(self.screen)
         msg.msg = "开发者:4564564"
         msg.x = 200
         msg.y = 300

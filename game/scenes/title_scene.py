@@ -1,21 +1,19 @@
 import pygame
-import os.path
 
-from game.config import Display, Path
-from game.saved import Saved
-from .base_scene import BaseScene
+from game.config import Display
+from game.saves import saved
+from game.saves.game_data import GameStats
+from game.scenes.base_scene import BaseScene
 from game.ui.button import Button
-from game.ui.messagebox import MessageBox
+from game.ui.message import Message
+from game.interpreter.ImageLoad import load_background
 
 
 class TitleScene(BaseScene):
     def __init__(self, screen):
         self.screen = screen
-        self.avoid_mouse = False
 
-        self.title_background = pygame.image.load(
-            os.path.join(Path.PATH_IMAGE_TRANSITION, "sakura_slope.png")
-        ).convert_alpha()
+        self.title_background = load_background("标题背景.png")
 
         self.continue_btn = Button(screen)
         self.continue_btn.msg = "继续游戏"
@@ -27,23 +25,26 @@ class TitleScene(BaseScene):
         self.game_start_btn.pos = (150, 550)
         self.game_start_btn.text_size = 60
 
+        self.game_data = GameStats()
+
     def enter(self):
-        self.msg = MessageBox(self.screen)
+        self.msg = Message(self.screen)
         self.msg.msg = "GALGAME模板"
         self.msg.x = 500
         self.msg.y = 100
-        self.msg.s = 70
+        self.msg.size = 70
         self.msg.center = True
 
         self.msg.show()
 
     def exit(self):
-        temp_screen = pygame.Surface((Display.WIDTH, Display.HEIGHT))
-        temp_screen.blit(self.screen, (0, 0))
+        # temp_screen = pygame.Surface((Display.WIDTH, Display.HEIGHT))
+        # temp_screen.blit(self.screen, (0, 0))
+        self.alpha_anime_exit(self.title_background)
 
     def update(self):
         if self.game_start_btn.pressed():
-            Saved().save()
+            saved.save(self.game_data)
             return "game"
         if self.continue_btn.pressed():
             return "game"
