@@ -10,7 +10,7 @@ class BaseScene:
     def enter(self):
         pass
 
-    def exit(self):
+    def exit(self) -> None | str:
         pass
 
     def draw(self):
