@@ -12,12 +12,20 @@ class DialogScene(BaseScene):
         # GameStatus.GAMESTATES.current_show_text:这个变量包含了现在需要显示的对话内容,类型str
         # GameStatus.GAMESTATES.current_background:这个变量包含了现在需要显示的背景,类型str
         # GameStatus.GAMESTATES.current_figure:这个变量包含了现在需要显示的人像名字,类型str
+
         self.screen = screen
         self.solve = Solver()
 
     def enter(self):
-        # 这里负责管理进入到事件
-        pass
+        current_show_name = (
+            GameStatus.GAMESTATES.current_show_name
+            if GameStatus.GAMESTATES.current_show_name
+            else "未知"
+        )
+        figure_image_text = (
+            current_show_name + "_" + GameStatus.GAMESTATES.current_figure
+        )
+        self.figure_image = GameStatus.FIGURE_IMAGE[figure_image_text]
 
     def exit(self):
         # 这里负责实现退出的事件
@@ -27,16 +35,10 @@ class DialogScene(BaseScene):
         if next_scene != "none":
             saved.save(GameStatus.GAMESTATES)
             return next_scene
-
-    def update(self):
-        # 这里负责管理刷新
-        # 你需要在这里实现检查是否按键点击，点击后就进入下一个场景
-        # 如果返回None就什么都不会发生
-        return (
-            self.exit()
-        )  # 注意，这里返回self.exit()就会进入下一个场景，你需要加入判断条件
+        else:
+            return self.exit()
 
     def draw(self):
         # 这里负责与绘画有关的事件
         # 你需要在这里添加show,blit等需要显示的
-        pass
+        self.screen.blit(self.figure_image, (800, 130))

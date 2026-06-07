@@ -1,6 +1,5 @@
 from game.config import GameStatus
 from game.utils import read_script
-from game.saves import saved
 
 
 class Solver:
@@ -10,8 +9,6 @@ class Solver:
     def next(self):
         stage = GameStatus.GAMESTATES.current_stage
         dialog = GameStatus.GAMESTATES.current_stage_dialog
-        GameStatus.GAMESTATES.current_stage_dialog += 1
-        saved.save(GameStatus.GAMESTATES)
         return self.script_handle(self.text[stage][dialog])
 
     def switch_background(self, text: list) -> str:
@@ -41,6 +38,7 @@ class Solver:
         return "none"
 
     def script_handle(self, text: list):
+        GameStatus.GAMESTATES.current_stage_dialog += 1
         match text[0]:
             case "@T":
                 return self.switch_transition(text)

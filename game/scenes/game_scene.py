@@ -7,6 +7,7 @@ from game.config import GameStatus
 from game.scenes.base_scene import BaseScene
 from game.scenes.manage_scene import SceneManager
 from game.scenes.sequences.dialog_scene import DialogScene
+from game.scenes.sequences.choice_scene import ChoiceScene
 from game.scenes.sequences.transition_scene import TransitionScene
 
 
@@ -19,7 +20,7 @@ class GameScenes(BaseScene):
 
         self.manage_scene.register("transition", TransitionScene(screen))
         self.manage_scene.register("dialog", DialogScene(screen))
-        self.manage_scene.register("choice", TransitionScene(screen))
+        self.manage_scene.register("choice", ChoiceScene(screen))
 
     def enter(self):
         game_process = saved.load()

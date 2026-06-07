@@ -1,4 +1,5 @@
 import pygame
+import time
 from game.interpreter.ImageLoad import load_transition
 from game.interpreter.solver import Solver
 from game.scenes.base_scene import BaseScene
@@ -11,7 +12,6 @@ class TransitionScene(BaseScene):
     def __init__(self, screen):
         self.screen = screen
         self.timer = 0
-        self.locker = False
         self.title_surface = screen  # pygame.Surface((Display.WIDTH, Display.HEIGHT))
         self.solve = Solver()
 
@@ -42,16 +42,15 @@ class TransitionScene(BaseScene):
         self.msg_chapter.show()
 
     def update(self):
-        if self.timer > 50 and not self.locker:
-            self.locker = True
-            return self.exit()
+        if self.timer > 50:
+            next_scene = self.solve.next()
+            saved.save(GameStatus.GAMESTATES)
+            print(next_scene)
+            if next_scene != "none":
+                return next_scene
 
     def exit(self):
         self.transition_anime_exit(self.background)
-        next_scene = self.solve.next()
-        if next_scene != "none":
-            saved.save(GameStatus.GAMESTATES)
-            return next_scene
 
     def draw(self):
         self.title_surface.blit(self.background, (750, 200))
