@@ -13,6 +13,7 @@ class SceneManager:
         self.scenes[name] = scene
 
     def switch(self, name: str):
+        print(name)
         if self.current_scene:
             self.current_scene.exit()
 

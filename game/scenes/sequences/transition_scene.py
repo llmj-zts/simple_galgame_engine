@@ -17,6 +17,7 @@ class TransitionScene(BaseScene):
         self.title_surface = screen  # pygame.Surface((Display.WIDTH, Display.HEIGHT))
 
     def enter(self):
+        print("到我出场啦")
         self.chapter = GameStatus.GAMESTATES.current_show_name
         self.title = GameStatus.GAMESTATES.current_show_text
         self.background_name = GameStatus.GAMESTATES.current_background
@@ -39,6 +40,9 @@ class TransitionScene(BaseScene):
         self.msg_title.surface = self.title_surface
 
         self.transition_anime_enter(self.background)
+
+    def update(self):
+        return None
 
     def draw(self):
         self.msg_title.show()

@@ -1,5 +1,6 @@
 from game.config import GameStatus
 from game.utils import read_script
+from game.saves import saved
 
 
 class Solver:
@@ -10,6 +11,7 @@ class Solver:
         stage = GameStatus.GAMESTATES.current_stage
         dialog = GameStatus.GAMESTATES.current_stage_dialog
         GameStatus.GAMESTATES.current_stage_dialog += 1
+        saved.save(GameStatus.GAMESTATES)
         return self.script_handle(self.text[stage][dialog])
 
     def switch_background(self, text: list) -> str:
@@ -17,10 +19,10 @@ class Solver:
         return "none"
 
     def switch_dialog(self, text: list) -> str:
-        GameStatus.GAMESTATES.current_show_name = text[1]
-        GameStatus.GAMESTATES.current_show_text = text[3]
+        GameStatus.GAMESTATES.current_show_name = text[0]
+        GameStatus.GAMESTATES.current_show_text = text[2]
         GameStatus.GAMESTATES.current_figure = (
-            text[2] if isinstance(text[2], str) else GameStatus.FIGURE_STR[text[2]]
+            text[1] if isinstance(text[1], str) else GameStatus.FIGURE_STR[text[1]]
         )
         return "dialog"
 

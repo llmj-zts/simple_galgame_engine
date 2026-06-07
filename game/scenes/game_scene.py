@@ -31,6 +31,8 @@ class GameScenes(BaseScene):
         if next_scene != "none":
             saved.save(GameStatus.GAMESTATES)
             self.manage_scene.switch(next_scene)
+        print(GameStatus.GAMESTATES)
+        self.next()
 
     def update(self):
         GameStatus.GAMESTATES.time = time.time()
@@ -38,3 +40,6 @@ class GameScenes(BaseScene):
 
     def draw(self):
         self.manage_scene.draw()
+
+    def exit(self):
+        self.next()
