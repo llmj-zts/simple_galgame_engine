@@ -27,7 +27,7 @@ python main.py
 
 **制作自己的GALGAME**
 
-按照[规则](对话架构介绍.md)修改text.py  
+按照[规则](./docs/对话架构介绍.md)修改text.py  
 详细文档正在编写,敬请期待😊
 
 
@@ -37,5 +37,5 @@ python main.py
 *这个项目可能不会及时更新,你也可以自己创建分支改代码*
 
 
-[更新日志](CHANGELOG.md)  
+[更新日志](./docs/CHANGELOG.md)  
 [个人网站页面](https://wfy-coder.github.io/2/index.html)
