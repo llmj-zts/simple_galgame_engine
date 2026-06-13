@@ -1,4 +1,3 @@
-import ImageLoad
-from solver import Solver
+from .solver import Solver
 
-__all__ = ["ImageLoad", "Solver"]
+__all__ = ["Solver"]

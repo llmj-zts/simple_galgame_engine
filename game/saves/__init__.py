@@ -1,4 +1,3 @@
-import saved
-from game_data import GameStats
+from .game_data import GameStats
 
-__all__ = ["saved", "GameStats"]
+__all__ = ["GameStats"]
