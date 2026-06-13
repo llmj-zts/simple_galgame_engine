@@ -1,10 +1,11 @@
 import time
+import textwrap
 import pygame
 from game.interpreter import ImageLoad
 from game.interpreter.solver import Solver
 from game.scenes import BaseScene
 from game.saves import saved
-from game.config import GameStatus
+from game.config import Display, GameStatus
 from game.ui.message import Message
 
 
@@ -39,6 +40,7 @@ class DialogScene(BaseScene):
     def update(self):
         if pygame.mouse.get_pressed()[0]:
             time.sleep(0.1)
+            pygame.event.clear()
             next_scene = self.solve.next()
             if next_scene != "none":
                 saved.save(GameStatus.GAMESTATES)
@@ -56,7 +58,11 @@ class DialogScene(BaseScene):
 
     def show_text_eachline(self):
         line = 0
-        show_text_list = GameStatus.GAMESTATES.current_show_text.split("\n")
+        show_text_list = []
+        if isinstance(GameStatus.GAMESTATES.current_show_text, str):
+            text = GameStatus.GAMESTATES.current_show_text
+            text = "\n".join(textwrap.wrap(text, width=Display.FONT_WIDTH))
+            show_text_list = text.split("\n")
         for show_text in show_text_list:
             show_text_msg = Message(self.screen)
             show_text_msg.msg = show_text
