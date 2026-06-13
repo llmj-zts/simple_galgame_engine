@@ -1,12 +1,13 @@
-import os
 import unicodedata
-from data.script.text import *
+import os
+import json
 from game.config import Display, Path
 
 
 def read_script():
-    global text
-    # f = open(os.path.join(Path.PATH_SCRIPT, "text.py"), "r")
+    f = open(os.path.join(Path.PATH_SCRIPT, "text.json"), "r")
+    text = json.load(f)
+    f.close()
     return text
 
 
