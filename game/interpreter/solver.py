@@ -31,11 +31,16 @@ class Solver:
 
     def switch_choice(self, text: list):
         GameStatus.GAMESTATES.current_stage_dialog = 0
+        GameStatus.GAMESTATES.current_show_text = text[1:]
         return "choice"
 
     def switch_call(self, text: list):
         GameStatus.GAMESTATES.current_stage_dialog = 0
+        GameStatus.GAMESTATES.current_stage = text[1]
         return "none"
+
+    def switch_end(self):
+        return "end"
 
     def script_handle(self, text: list):
         GameStatus.GAMESTATES.current_stage_dialog += 1
@@ -48,5 +53,7 @@ class Solver:
                 return self.switch_choice(text)
             case "@P":
                 return self.switch_call(text)
+            case "@E":
+                return self.switch_end()
             case _:
                 return self.switch_dialog(text)
