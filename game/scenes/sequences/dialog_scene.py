@@ -10,14 +10,14 @@ from game.ui.message import Message
 
 
 class DialogScene(BaseScene):
-    def __init__(self, screen):
+    def __init__(self, screen) -> None:
         self.screen: pygame.Surface = screen
         self.figure_image: pygame.Surface | None = None
         self.background_image = None
         self.dialog_ui = ImageLoad.load_ui("dialog.png")
         self.solve: Solver = Solver()
 
-    def enter(self):
+    def enter(self) -> None:
         self.is_mouse_press = False
         if GameStatus.GAMESTATES.current_show_name:
             current_show_name = GameStatus.GAMESTATES.current_show_name
@@ -38,7 +38,7 @@ class DialogScene(BaseScene):
         self.show_name_msg.color = (232, 242, 252)
         self.show_name_msg.center = True
 
-    def update(self):
+    def update(self) -> str:
         if self.is_mouse_press:
             time.sleep(0.1)
             pygame.event.clear()
@@ -49,7 +49,7 @@ class DialogScene(BaseScene):
         else:
             self.is_mouse_press = pygame.mouse.get_pressed()[0]
 
-    def draw(self):
+    def draw(self) -> None:
         if self.background_image:
             self.screen.blit(self.background_image, (0, 0))
         if self.figure_image:
@@ -59,7 +59,7 @@ class DialogScene(BaseScene):
         self.show_name_msg.show()
         self.show_text_eachline()
 
-    def show_text_eachline(self):
+    def show_text_eachline(self) -> None:
         line = 0
         show_text_list = []
         if isinstance(GameStatus.GAMESTATES.current_show_text, str):

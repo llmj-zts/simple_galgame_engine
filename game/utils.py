@@ -28,7 +28,7 @@ def char_width(char: str) -> float:
         return 0
 
 
-def adapt_text_width(text, max_length) -> str:
+def adapt_text_width(text: str, max_length) -> str:
     text_list = text.split("\n")
     for item_num in range(len(text_list)):
         length = 0
