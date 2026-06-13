@@ -18,6 +18,7 @@ class DialogScene(BaseScene):
         self.solve: Solver = Solver()
 
     def enter(self):
+        self.is_mouse_press = False
         if GameStatus.GAMESTATES.current_show_name:
             current_show_name = GameStatus.GAMESTATES.current_show_name
             figure_image_text = (
@@ -38,13 +39,15 @@ class DialogScene(BaseScene):
         self.show_name_msg.center = True
 
     def update(self):
-        if pygame.mouse.get_pressed()[0]:
+        if self.is_mouse_press:
             time.sleep(0.1)
             pygame.event.clear()
             next_scene = self.solve.next()
             if next_scene != "none":
                 saved.save(GameStatus.GAMESTATES)
                 return next_scene
+        else:
+            self.is_mouse_press = pygame.mouse.get_pressed()[0]
 
     def draw(self):
         if self.background_image:
